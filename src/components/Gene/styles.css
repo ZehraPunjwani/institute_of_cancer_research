@@ -1,0 +1,9 @@
+.strike-through {
+    text-decoration: line-through;
+}
+
+.chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,38 @@
+.records {
+    text-align: center;
+    min-width: 100vw;
+}
+
+.card-group, .filter {
+    display: flex;
+    justify-content: center;
+    /*align-items: center;*/
+}
+
+.link {
+    text-decoration: none !important;
+}
+
+.link:hover {
+    background-color: aliceblue;
+    border-radius: 5px;
+}
+
+.strike-through {
+    text-decoration: line-through;
+}
+
+p {
+    text-align: justify;
+}
+
+h6 {
+    text-align: center;
+}
+
+.loading {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
