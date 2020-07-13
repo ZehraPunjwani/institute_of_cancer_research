@@ -10,7 +10,7 @@ const Gene = (props) => {
         ['Year', 'Quantity'],
     ];
 
-    gene.publications.map((entry) => data.push([entry[0], entry[1]]))
+    gene['publications'].map((entry) => data.push([entry[0], entry[1]]))
 
     return (
         <div>
@@ -25,7 +25,8 @@ const Gene = (props) => {
             <div className="media">
                 <div className="align-self-start mr-3">
                     <img src={gene.image} alt={gene['short_name']}/>
-                    <h6 className="card-title"><b>Is Druggable</b>: {gene.features['is_druggable'] ? 'True' : 'False'}</h6>
+                    <h6 className="card-title"><b>Is Druggable</b>: {gene.features['is_druggable'] ? 'True' : 'False'}
+                    </h6>
                     <h6 className="card-title"><b>Is Enzyme</b>: {gene.features['is_enzyme'] ? 'True' : 'False'}</h6>
                 </div>
 

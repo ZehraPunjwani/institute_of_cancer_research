@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {GENES_ENDPOINT} from "../../utils/api";
+import {GET_GENES} from "../../utils/api";
 import './styles.css';
 import {Link} from "react-router-dom";
 
@@ -14,7 +14,7 @@ const Genes = () => {
         setQuery('');
 
         function fetchGenesUrl() {
-            return GENES_ENDPOINT + query;
+            return GET_GENES + query;
         }
 
         async function fetchArticles() {
@@ -44,6 +44,7 @@ const Genes = () => {
                         Features:
                         <div className="pl-3 form-check form-check-inline">
                             <input
+                                disabled={!genes}
                                 className="form-check-input"
                                 type="checkbox"
                                 id="is_druggable"
@@ -54,6 +55,7 @@ const Genes = () => {
                         </div>
                         <div className="form-check form-check-inline">
                             <input
+                                disabled={!genes}
                                 className="form-check-input"
                                 type="checkbox"
                                 id="is_enzyme"
@@ -90,7 +92,7 @@ const Genes = () => {
                                 genes.map((gene) => (
                                     <Link className="link" to={{pathname: gene.id, state: {gene: gene}}} key={gene.id}>
                                         <div className="card">
-                                            <img className="card-img-top" src={gene.image} alt={gene['short_name']} />
+                                            <img className="card-img-top" src={gene.image} alt={gene['short_name']}/>
                                             <div className="card-body">
                                                 <h5 className="card-title">{gene['short_name']}</h5>
                                             </div>
