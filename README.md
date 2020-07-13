@@ -35,3 +35,11 @@
                     - App.test.js
                 - utils
                     -api.js
+
+## ToDo
+- Link Front end to Backend
+- Backend - `image` showing as null,
+          - `features` - needs to be an object
+- Frontend - Link to /:id endpoint for individual gene
+- Testing - Jest
+- Readme update
