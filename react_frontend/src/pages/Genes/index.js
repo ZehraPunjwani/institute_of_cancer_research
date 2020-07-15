@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import {Link} from "react-router-dom";
 import axios from 'axios';
 import {GET_GENES} from "../../utils/api";
 import './styles.css';
-import {Link} from "react-router-dom";
 
 const Genes = () => {
     const [genes, setGenes] = useState(null);
@@ -33,7 +33,7 @@ const Genes = () => {
     }, [query]);
 
     const filterData = () => {
-        return genes.filter((gene) => gene.features['is_druggable'] === isDruggable && gene.features['is_enzyme'] === isEnzyme);
+        return genes.filter((gene) => gene['is_druggable'] === isDruggable && gene['is_enzyme'] === isEnzyme);
     }
 
     const showFilterOptions = () => {
@@ -90,7 +90,9 @@ const Genes = () => {
                         <div className="card-group">
                             {
                                 genes.map((gene) => (
-                                    <Link className="link" to={{pathname: gene.id, state: {gene: gene}}} key={gene.id}>
+                                    <Link className="link" onClick={() => console.log("ID", gene.id)}
+                                          to={{pathname: gene.id, state: {id: gene.id}}} key={gene.id}>
+                                        {console.log(gene.id)}
                                         <div className="card">
                                             <img className="card-img-top" src={gene.image} alt={gene['short_name']}/>
                                             <div className="card-body">
@@ -99,11 +101,11 @@ const Genes = () => {
                                             <div className="card-footer">
                                                 <div className="row">
                                                     <small
-                                                        className={`col-6 text-muted ${gene.features['is_druggable'] && 'strike-through'}`}>
+                                                        className={`col-6 text-muted ${gene['is_druggable'] && 'strike-through'}`}>
                                                         Is Druggable
                                                     </small>
                                                     <small
-                                                        className={`col-6 text-muted ${gene.features['is_enzyme'] && 'strike-through'}`}>
+                                                        className={`col-6 text-muted ${gene['is_enzyme'] && 'strike-through'}`}>
                                                         Is Enzyme
                                                     </small>
                                                 </div>

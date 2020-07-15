@@ -1,8 +1,9 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch,} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Genes from "./Genes";
 import Gene from "../components/Gene";
 import Header from "../components/Header";
+import Error from "../components/Error";
 
 function App() {
     return (
@@ -11,7 +12,8 @@ function App() {
             <Router>
                 <Switch>
                     <Route exact path="/" component={Genes}/>
-                    <Route path="/:id" component={Gene}/>
+                    <Route exact path="/:id" component={Gene}/>
+                    <Route path="*" component={Error}/>
                 </Switch>
             </Router>
         </div>

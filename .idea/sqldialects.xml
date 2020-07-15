@@ -2,5 +2,6 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/node_backend/index.js" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/node_backend/utils/genes.sql" dialect="GenericSQL" />
   </component>
 </project>
