@@ -66,10 +66,5 @@ The Server (API) will run on the following:
                         - routes.js
                         - genes.json
 
-## ToDo
-- Link Front end to Backend
-- Backend - `image` showing as null,
-          - `features` - needs to be an object
-- Frontend - Link to /:id endpoint for individual gene
+## Unexplored 
 - Testing - Jest
-- Readme update
