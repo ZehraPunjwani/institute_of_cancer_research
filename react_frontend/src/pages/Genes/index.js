@@ -6,13 +6,12 @@ import './styles.css';
 
 const Genes = () => {
     const [genes, setGenes] = useState(null);
-    const [query, setQuery] = useState('');
-    const [isDruggable, setIsDruggable] = useState(true);
-    const [isEnzyme, setIsEnzyme] = useState(true);
+    const [query] = useState('');
+    const [clearFilter, setClearFilter] = useState(true);
+    const [isDruggable, setIsDruggable] = useState(false);
+    const [isEnzyme, setIsEnzyme] = useState(false);
 
     useEffect(() => {
-        setQuery('');
-
         function fetchGenesUrl() {
             return GET_GENES + query;
         }
@@ -32,8 +31,11 @@ const Genes = () => {
         });
     }, [query]);
 
-    const filterData = () => {
-        return genes.filter((gene) => gene['is_druggable'] === isDruggable && gene['is_enzyme'] === isEnzyme);
+    let filterData = () => {
+        if (clearFilter) {
+            return genes;
+        }
+        return genes.filter((gene) => gene.features['is_druggable'] === isDruggable && gene.features['is_enzyme'] === isEnzyme);
     }
 
     const showFilterOptions = () => {
@@ -43,24 +45,41 @@ const Genes = () => {
                     <div className="form-check">
                         Features:
                         <div className="pl-3 form-check form-check-inline">
+                            <button type="button"
+                                    className="btn btn-outline-secondary btn-light mr-3"
+                                    disabled={!genes || filterData().length === 0}
+                                    onClick={() => {
+                                        setClearFilter(true);
+                                        setIsDruggable(false);
+                                        setIsEnzyme(false);
+                                    }}>Clear Filter
+                            </button>
+                        </div>
+                        <div className="pl-3 form-check form-check-inline">
                             <input
-                                disabled={!genes}
+                                disabled={!genes || filterData().length === 0}
                                 className="form-check-input"
                                 type="checkbox"
                                 id="is_druggable"
                                 checked={isDruggable}
-                                onChange={() => setIsDruggable(!isDruggable)}
+                                onChange={() => {
+                                    setIsDruggable(!isDruggable);
+                                    setClearFilter(false);
+                                }}
                             />
                             <label className="form-check-label" htmlFor="is_druggable">Is Druggable</label>
                         </div>
                         <div className="form-check form-check-inline">
                             <input
-                                disabled={!genes}
+                                disabled={!genes || filterData().length === 0}
                                 className="form-check-input"
                                 type="checkbox"
                                 id="is_enzyme"
                                 checked={isEnzyme}
-                                onChange={() => setIsEnzyme(!isEnzyme)}
+                                onChange={() => {
+                                    setIsEnzyme(!isEnzyme);
+                                    setClearFilter(false);
+                                }}
                             />
                             <label className="form-check-label" htmlFor="is_enzyme">Is Enzyme</label>
                         </div>
@@ -89,23 +108,23 @@ const Genes = () => {
                     <div className="p-3">
                         <div className="card-group">
                             {
-                                genes.map((gene) => (
-                                    <Link className="link" onClick={() => console.log("ID", gene.id)}
-                                          to={{pathname: gene.id, state: {id: gene.id}}} key={gene.id}>
-                                        {console.log(gene.id)}
+                                filterData().map((gene) => (
+                                    <Link className="link" to={{pathname: gene.id, state: {id: gene.id}}}
+                                          key={gene.id}>
                                         <div className="card">
-                                            <img className="card-img-top" src={gene.image} alt={gene['short_name']}/>
+                                            <img className="card-img-top" src={gene.image}
+                                                 alt={gene['short_name']}/>
                                             <div className="card-body">
                                                 <h5 className="card-title">{gene['short_name']}</h5>
                                             </div>
                                             <div className="card-footer">
                                                 <div className="row">
                                                     <small
-                                                        className={`col-6 text-muted ${gene['is_druggable'] && 'strike-through'}`}>
+                                                        className={`col-6 text-muted ${!gene.features['is_druggable'] && 'strike-through'}`}>
                                                         Is Druggable
                                                     </small>
                                                     <small
-                                                        className={`col-6 text-muted ${gene['is_enzyme'] && 'strike-through'}`}>
+                                                        className={`col-6 text-muted ${!gene.features['is_enzyme'] && 'strike-through'}`}>
                                                         Is Enzyme
                                                     </small>
                                                 </div>

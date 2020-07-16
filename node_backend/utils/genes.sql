@@ -8,9 +8,7 @@ CREATE DATABASE genes WITH OWNER admin;
 
 DROP TABLE genes;
 CREATE TABLE genes (
-    ID TEXT PRIMARY KEY,
-    is_druggable BOOLEAN,
-    is_enzyme BOOLEAN,
+    id TEXT PRIMARY KEY,
     family TEXT,
     num_structures integer,
     num_compounds integer,
@@ -20,12 +18,16 @@ CREATE TABLE genes (
     image Text,
     publications int[][]
 );
+CREATE TABLE features (
+    id TEXT NOT NULL,
+    is_druggable BOOLEAN,
+    is_enzyme BOOLEAN,
+    FOREIGN KEY (id) REFERENCES genes (id)
+);
 
 INSERT into genes values
     (
         'P17948',
-        true,
-        true,
         'Tyr protein kinase family',
         12,
         3337,
@@ -37,8 +39,6 @@ INSERT into genes values
     ),
     (
         'P00533',
-        true,
-        true,
         'Tyr protein kinase family',
         185,
         11597,
@@ -50,8 +50,6 @@ INSERT into genes values
   ),
     (
         'P04049',
-        true,
-        true,
         'TKL Ser/Thr protein kinase family',
         19,
         2515,
@@ -63,8 +61,6 @@ INSERT into genes values
     ),
     (
         'P06213',
-        true,
-        true,
         'Tyr protein kinase family',
         36,
         2922,
@@ -76,8 +72,6 @@ INSERT into genes values
     ),
     (
         'P06241',
-        true,
-        true,
         'Tyr protein kinase family',
         30,
         2362,
@@ -89,8 +83,6 @@ INSERT into genes values
     ),
     (
         'P08069',
-        true,
-        true,
         'Tyr protein kinase family',
         25,
         4430,
@@ -102,8 +94,6 @@ INSERT into genes values
     ),
     (
         'Q08881',
-        true,
-        true,
         'Tyr protein kinase family',
         36,
         1655,
@@ -115,8 +105,6 @@ INSERT into genes values
     ),
     (
         'Q15375',
-        true,
-        true,
         'Tyr protein kinase family',
         4,
         484,
@@ -128,8 +116,6 @@ INSERT into genes values
     ),
     (
         'P10721',
-        true,
-        true,
         'Tyr protein kinase family',
         18,
         2857,
@@ -141,8 +127,6 @@ INSERT into genes values
     ),
     (
         'P04626',
-        true,
-        true,
         'Tyr protein kinase family',
         33,
         5220,
@@ -154,8 +138,6 @@ INSERT into genes values
     ),
     (
         'P07948',
-        true,
-        true,
         'Tyr protein kinase family',
         5,
         1764,
@@ -167,8 +149,6 @@ INSERT into genes values
     ),
     (
         'P08581',
-        true,
-        true,
         'Tyr protein kinase family',
         80,
         5211,
@@ -180,8 +160,6 @@ INSERT into genes values
     ),
     (
         'P29317',
-        true,
-        true,
         'Tyr protein kinase family',
         63,
         1510,
@@ -193,8 +171,6 @@ INSERT into genes values
     ),
     (
         'P29320',
-        true,
-        true,
         'Tyr protein kinase family',
         27,
         735,
@@ -206,8 +182,6 @@ INSERT into genes values
     ),
     (
         'Q02763',
-        true,
-        true,
         'Tyr protein kinase family',
         15,
         1801,
@@ -219,8 +193,6 @@ INSERT into genes values
     ),
     (
         'P54756',
-        true,
-        true,
         'Tyr protein kinase family',
         2,
         519,
@@ -232,8 +204,6 @@ INSERT into genes values
     ),
     (
         'Q9UM73',
-        true,
-        true,
         'Tyr protein kinase family',
         61,
         2685,
@@ -245,8 +215,6 @@ INSERT into genes values
     ),
     (
         'P35968',
-        true,
-        true,
         'Tyr protein kinase family',
         51,
         11286,
@@ -258,8 +226,6 @@ INSERT into genes values
     ),
     (
         'P36507',
-        true,
-        true,
         'STE Ser/Thr protein kinase family',
         3,
         637,
@@ -271,8 +237,6 @@ INSERT into genes values
     ),
     (
         'P06239',
-        true,
-        true,
         'Tyr protein kinase family',
         55,
         4813,
@@ -284,8 +248,6 @@ INSERT into genes values
     ),
     (
         'P07949',
-        true,
-        true,
         'Tyr protein kinase family',
         18,
         1649,
@@ -297,8 +259,6 @@ INSERT into genes values
     ),
     (
         'Q15303',
-        true,
-        true,
         'Tyr protein kinase family',
         10,
         1934,
@@ -310,8 +270,6 @@ INSERT into genes values
     ),
     (
         'P21802',
-        true,
-        true,
         'Tyr protein kinase family',
         40,
         2318,
@@ -323,8 +281,6 @@ INSERT into genes values
     ),
     (
         'P23458',
-        true,
-        true,
         'Tyr protein kinase family',
         37,
         5478,
@@ -336,8 +292,6 @@ INSERT into genes values
     ),
     (
         'P36888',
-        true,
-        true,
         'Tyr protein kinase family',
         7,
         4055,
@@ -346,4 +300,131 @@ INSERT into genes values
         'FLT3',
         'https://cdn.rcsb.org/images/rutgers/rj/1rjb/1rjb.pdb-250.jpg',
         '{{2004,1},{2008,1},{2009,3},{2010,2},{2011,1},{2012,2},{2013,65},{2014,61},{2015,56},{2016,71},{2017,5}}'
+    );
+
+INSERT into features values
+    (
+        'P17948',
+        true,
+        true
+    ),
+    (
+        'P00533',
+        true,
+        false
+  ),
+    (
+        'P04049',
+        false,
+        true
+    ),
+    (
+        'P06213',
+        false,
+        false
+    ),
+    (
+        'P06241',
+        true,
+        true
+    ),
+    (
+        'P08069',
+        true,
+        false
+    ),
+    (
+        'Q08881',
+        true,
+        true
+    ),
+    (
+        'Q15375',
+        true,
+        true
+    ),
+    (
+        'P10721',
+        true,
+        true
+    ),
+    (
+        'P04626',
+        false,
+        true
+    ),
+    (
+        'P07948',
+        false,
+        false
+    ),
+    (
+        'P08581',
+        false,
+        true
+    ),
+    (
+        'P29317',
+        true,
+        true
+    ),
+    (
+        'P29320',
+        true,
+        true
+    ),
+    (
+        'Q02763',
+        true,
+        true
+    ),
+    (
+        'P54756',
+        false,
+        true
+    ),
+    (
+        'Q9UM73',
+        true,
+        true
+    ),
+    (
+        'P35968',
+        false,
+        false
+    ),
+    (
+        'P36507',
+        false,
+        false
+    ),
+    (
+        'P06239',
+        true,
+        true
+    ),
+    (
+        'P07949',
+        false,
+        true
+    ),
+    (
+        'Q15303',
+        true,
+        true
+    ),
+    (
+        'P21802',
+        true,
+        false
+    ),
+    (
+        'P23458',
+        false,
+        true
+    ),
+    (
+        'P36888',
+        true,
+        true
     );

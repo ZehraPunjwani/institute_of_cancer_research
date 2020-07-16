@@ -5,10 +5,10 @@ import axios from "axios";
 import Error from "../Error";
 import {GET_GENES} from "../../utils/api";
 import './styles.css';
+import {Link} from "react-router-dom";
 
 const Gene = (props) => {
     let id = props.location.state ? props.location.state.id : props.location.pathname.split('/')[1];
-    console.log("Bottom", id);
 
     const [gene, setGene] = useState(null);
     const [query] = useState(id);
@@ -17,9 +17,8 @@ const Gene = (props) => {
     let data = [['Year', 'Quantity']];
 
     useEffect(() => {
-        if(id) {
+        if (query) {
             async function fetchArticles() {
-                console.log('Entered', GET_GENES + query);
                 const response = await axios(GET_GENES + query);
                 return response;
             }
@@ -28,7 +27,6 @@ const Gene = (props) => {
                 const response = res.data;
                 const gene = response.length > 0 ? response[0] : [];
                 setGene(gene);
-                console.log('Hi', gene);
                 setErrors(false);
                 setLoading(false);
             }).catch((err) => {
@@ -56,8 +54,10 @@ const Gene = (props) => {
                 <div>
                     <div className="card card-header mt-3 pt-3 mr-3 pr-3 ml-3 pl-3">
                         <p className="card-title">
-                            <button type="button" className="btn btn-outline-secondary btn-light mr-3"
-                                    onClick={() => props.history.goBack()}>Back
+                            <button type="button" className="btn btn-outline-secondary btn-light mr-3">
+                                <Link className="link" to={{pathname: '/'}}>
+                                    Back
+                                </Link>
                             </button>
                             ({gene.id} - {gene['full_name']} ({gene['short_name']})
                         </p>
@@ -65,9 +65,11 @@ const Gene = (props) => {
                     <div className="media">
                         <div className="align-self-start mr-3">
                             <img src={gene.image} alt={gene['short_name']}/>
-                            <h6 className="card-title"><b>Is Druggable</b>: {gene['is_druggable'] ? 'True' : 'False'}
+                            <h6 className="card-title"><b>Is
+                                Druggable</b>: {gene.features['is_druggable'] ? 'True' : 'False'}
                             </h6>
-                            <h6 className="card-title"><b>Is Enzyme</b>: {gene['is_enzyme'] ? 'True' : 'False'}</h6>
+                            <h6 className="card-title"><b>Is Enzyme</b>: {gene.features['is_enzyme'] ? 'True' : 'False'}
+                            </h6>
                         </div>
 
                         <div className="media-body m-3 p-3">
