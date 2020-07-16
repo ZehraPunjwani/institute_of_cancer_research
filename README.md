@@ -1,5 +1,14 @@
 # Institute of Cancer Research
 
+Initial View
+![Initial View](Screenshots/Initial_View.png)
+
+Initial View with Filtering
+![Initial View with Filtering](Screenshots/Initial_View_Filtering.png)
+
+Gene Information View
+![Gene Information View](Screenshots/Gene_Information_View.png)
+
 ## Getting Started
 The application is connected End-to-End using the following technology stacks:
     
