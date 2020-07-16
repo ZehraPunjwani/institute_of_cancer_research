@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
+import {Link} from "react-router-dom";
 import Chart from "react-google-charts";
 import axios from "axios";
 
 import Error from "../Error";
 import {GET_GENES} from "../../utils/api";
 import './styles.css';
-import {Link} from "react-router-dom";
 
 const Gene = (props) => {
     let id = props.location.state ? props.location.state.id : props.location.pathname.split('/')[1];
 
-    const [gene, setGene] = useState(null);
+    const [gene, setGene] = useState([]);
     const [query] = useState(id);
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState(true);
@@ -18,14 +18,14 @@ const Gene = (props) => {
 
     useEffect(() => {
         if (query) {
-            async function fetchArticles() {
-                const response = await axios(GET_GENES + query);
+            async function fetchGene() {
+                const response = await axios.get(GET_GENES + query, {timeout: 1000});
                 return response;
             }
 
-            fetchArticles().then(res => {
+            fetchGene().then(res => {
                 const response = res.data;
-                const gene = response.length > 0 ? response[0] : [];
+                const gene = response.length > 0 && response;
                 setGene(gene);
                 setErrors(false);
                 setLoading(false);
@@ -44,36 +44,37 @@ const Gene = (props) => {
                     <p>Loading...</p>
                 </div>
             )
-        } else if ((gene && gene.length === 0) || (!loading && errors)) {
+        } else if ((!loading && errors) || (!loading && gene.length === 0)) {
             return (
                 <Error/>
             );
         } else {
-            gene['publications'].map((entry) => data.push(entry));
+            const firstIndex = gene[0];
+            firstIndex['publications'].map((entry) => data.push(entry));
             return (
                 <div>
                     <div className="card card-header mt-3 pt-3 mr-3 pr-3 ml-3 pl-3">
                         <p className="card-title">
-                            <button type="button" className="btn btn-outline-secondary btn-light mr-3">
-                                <Link className="link" to={{pathname: '/'}}>
-                                    Back
-                                </Link>
-                            </button>
-                            ({gene.id} - {gene['full_name']} ({gene['short_name']})
+                            <Link type="button" className="link btn btn-outline-secondary btn-light mr-3"
+                                  to={{pathname: '/'}}>
+                                Back
+                            </Link>
+                            ({firstIndex.id} - {firstIndex['full_name']} ({firstIndex['short_name']})
                         </p>
                     </div>
                     <div className="media">
                         <div className="align-self-start mr-3">
-                            <img src={gene.image} alt={gene['short_name']}/>
+                            <img src={firstIndex.image} alt={firstIndex['short_name']}/>
                             <h6 className="card-title"><b>Is
-                                Druggable</b>: {gene.features['is_druggable'] ? 'True' : 'False'}
+                                Druggable</b>: {firstIndex.features['is_druggable'] ? 'True' : 'False'}
                             </h6>
-                            <h6 className="card-title"><b>Is Enzyme</b>: {gene.features['is_enzyme'] ? 'True' : 'False'}
+                            <h6 className="card-title"><b>Is
+                                Enzyme</b>: {firstIndex.features['is_enzyme'] ? 'True' : 'False'}
                             </h6>
                         </div>
 
                         <div className="media-body m-3 p-3">
-                            <p className="card-title"><b>Family</b>: {gene.family}</p>
+                            <p className="card-title"><b>Family</b>: {firstIndex.family}</p>
 
                             <div className="chart row">
                                 <Chart
@@ -83,8 +84,8 @@ const Gene = (props) => {
                                     loader={<div>Loading Chart</div>}
                                     data={[
                                         ['Type', 'Quantity'],
-                                        ['Structure', gene['num_structures']],
-                                        ['Compound', gene['num_compounds']],
+                                        ['Structure', firstIndex['num_structures']],
+                                        ['Compound', firstIndex['num_compounds']],
                                     ]}
                                     options={{
                                         title: 'No. of Structures vs Compounds',
@@ -118,7 +119,7 @@ const Gene = (props) => {
                                 />
                             </div>
                             <p><b>Description</b></p>
-                            <p>{gene.description}</p>
+                            <p>{firstIndex.description}</p>
                         </div>
                     </div>
                 </div>

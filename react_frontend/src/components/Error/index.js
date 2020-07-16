@@ -8,11 +8,10 @@ const Error = () => {
         <div>
             <div className="card card-header mt-3 pt-3 mr-3 pr-3 ml-3 pl-3">
                 <p className="card-title">
-                    <button type="button" className="btn btn-outline-secondary btn-light mr-3">
-                        <Link className="link" to={{pathname: '/'}}>
-                            Back
-                        </Link>
-                    </button>
+                    <Link type="button" className="link btn btn-outline-secondary btn-light mr-3"
+                          to={{pathname: '/'}}>
+                        Back
+                    </Link>
                 </p>
             </div>
             <div className="mt-3 pt-3 mr-3 pr-3 ml-3 pl-3">

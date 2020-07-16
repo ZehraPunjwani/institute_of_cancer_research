@@ -12,17 +12,13 @@ const Genes = () => {
     const [isEnzyme, setIsEnzyme] = useState(false);
 
     useEffect(() => {
-        function fetchGenesUrl() {
-            return GET_GENES + query;
-        }
-
-        async function fetchArticles() {
-            const response = await axios(fetchGenesUrl());
+        async function fetchGenes() {
+            const response = await axios.get(GET_GENES + query, {timeout: 1000});
 
             return response;
         }
 
-        fetchArticles().then(res => {
+        fetchGenes().then(res => {
             const response = res.data;
             const genes = response;
             setGenes(genes);
