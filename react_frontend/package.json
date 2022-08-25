@@ -11,7 +11,7 @@
     "react-scripts": "3.4.1"
   },
   "devDependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.2",
     "react-google-charts": "^3.0.15",
     "react-router-dom": "^5.2.0"
   },
